@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 96%;
+    --foreground: 240 20% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 20% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 20% 8%;
+
+    --primary: 262 70% 58%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 8% 92%;
+    --secondary-foreground: 240 20% 8%;
+
+    --muted: 240 8% 94%;
+    --muted-foreground: 240 8% 46%;
+
+    --accent: 330 75% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 10% 90%;
+    --input: 240 10% 90%;
+    --ring: 262 70% 58%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 240 10% 90%;
+    --sidebar-ring: 262 70% 58%;
+
+    /* Extended palette */
+    --violet: 262 70% 58%;
+    --pink: 330 75% 60%;
+    --coral: 15 85% 65%;
+    --sky: 200 80% 60%;
+    --success: 152 60% 42%;
+    --warning: 38 92% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    @apply tracking-tight font-bold;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .bento-card {
+    @apply bg-card rounded-3xl border border-border/40 p-6 md:p-8 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/20;
+  }
+
+  .bento-card-gradient {
+    @apply rounded-3xl p-6 md:p-8 transition-all duration-500 hover:shadow-xl;
+    background: linear-gradient(135deg, hsl(262 70% 58% / 0.08), hsl(330 75% 60% / 0.08));
+  }
+
+  .tag-free {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    background: hsl(152 60% 42% / 0.1);
+    color: hsl(152 60% 42%);
+  }
+
+  .tag-paid {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    background: hsl(262 70% 58% / 0.1);
+    color: hsl(262 70% 58%);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(262 70% 58%), hsl(330 75% 60%), hsl(15 85% 65%));
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(262 70% 58% / 0.3), hsl(330 75% 60% / 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@layer utilities {
+  .hover-lift {
+    @apply transition-all duration-500 hover:-translate-y-1 hover:shadow-xl;
+  }
+}
+
+/* ── Hero wave animations ─────────────────────────────────────────── */
+@keyframes hero-wave-move {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.hero-wave-1 {
+  animation: hero-wave-move 20s linear infinite;
+}
+.hero-wave-2 {
+  animation: hero-wave-move 15s linear infinite reverse;
+}
+.hero-wave-3 {
+  animation: hero-wave-move 25s linear infinite;
+}
+
+/* Speed up all waves on hover */
+.hero-section:hover .hero-wave-1 { animation-duration: 7s; }
+.hero-section:hover .hero-wave-2 { animation-duration: 5s; }
+.hero-section:hover .hero-wave-3 { animation-duration: 9s; }
+
+/* ── Krackbot Studio shimmer text ─────────────────────────────────── */
+@keyframes krackbot-shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.krackbot-studio-text {
+  background: linear-gradient(
+    90deg,
+    hsl(262 70% 58%),
+    hsl(330 75% 60%),
+    hsl(15 85% 65%),
+    hsl(200 80% 60%),
+    hsl(262 70% 58%)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: krackbot-shimmer 5s linear infinite;
+}
+
+.krackbot-studio-wrap {
+  filter:
+    drop-shadow(0 0 24px hsl(262 70% 58% / 0.35))
+    drop-shadow(0 0 56px hsl(330 75% 60% / 0.18));
+}
