@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 
 const experiments = [
   {
@@ -59,6 +61,27 @@ const Experimentations = () => (
     <section className="pt-36 pb-20">
       <div className="section-container">
         <FadeIn>
+          <Link to="/design-system" className="block mb-8 group">
+            <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-[linear-gradient(135deg,hsl(262_70%_58%_/_0.14),hsl(330_75%_60%_/_0.12),hsl(15_85%_65%_/_0.12))] p-6 sm:p-8 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-xl group-hover:shadow-primary/10">
+              <div className="absolute -top-20 -right-20 h-48 w-48 rounded-full bg-primary/15 blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-accent/15 blur-3xl pointer-events-none" />
+              <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.14em] text-primary font-semibold mb-2">New at Krackbot Labs</p>
+                  <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">The Paradox Design System</h2>
+                  <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
+                    Explore our complete design language with copy-ready color tokens, gradients, components, icon standards, and downloadable typography assets.
+                  </p>
+                </div>
+                <div className="inline-flex items-center gap-2 rounded-xl bg-foreground text-background px-4 py-2.5 text-sm font-semibold w-fit">
+                  Explore Design System <ArrowUpRight className="h-4 w-4" />
+                </div>
+              </div>
+            </div>
+          </Link>
+        </FadeIn>
+
+        <FadeIn delay={0.05}>
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4">Krackbot Labs</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mb-16">
             Our innovation lab — where we test new AI models, automation patterns, and product concepts before they go live.

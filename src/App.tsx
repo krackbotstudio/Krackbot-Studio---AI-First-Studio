@@ -9,7 +9,10 @@ import Tools from "./pages/Tools";
 import Experimentations from "./pages/Experimentations";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import DesignSystem from "./pages/DesignSystem";
 import NotFound from "./pages/NotFound";
+import WhatsAppChatButton from "./components/WhatsAppChatButton";
+import FloatingSocialLinks from "./components/FloatingSocialLinks";
 
 const queryClient = new QueryClient();
 
@@ -24,10 +27,13 @@ const App = () => (
           <Route path="/services" element={<Services />} />
           <Route path="/tools" element={<Tools />} />
           <Route path="/experimentations" element={<Experimentations />} />
+          <Route path="/design-system" element={<DesignSystem />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <FloatingSocialLinks />
+        <WhatsAppChatButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

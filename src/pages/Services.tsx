@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
+import AIPoweredServices from "@/components/AIPoweredServices";
 import { Workflow, Bot, Globe, Smartphone, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -87,6 +88,7 @@ const Services = () => (
         </FadeIn>
       </div>
     </section>
+    <AIPoweredServices />
     <Footer />
   </div>
 );
