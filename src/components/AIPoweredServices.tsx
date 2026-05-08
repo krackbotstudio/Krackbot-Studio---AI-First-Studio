@@ -1,19 +1,38 @@
+import { Link } from "react-router-dom";
 import { Zap, Paintbrush, Code2, Building2, Bot, FlaskConical, ArrowUpRight } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import { Button } from "@/components/ui/button";
+import { quickAIBuildServices } from "@/data/quickAIBuilds";
 
-const categories = [
+type TableService = {
+  name: string;
+  whatWeDeliver: string;
+  clientDeliverables: string;
+  buildTime: string;
+  slug?: string;
+};
+
+type ServiceCategory = {
+  icon: typeof Zap;
+  title: string;
+  color: string;
+  hasBookCta?: boolean;
+  services: TableService[];
+};
+
+const categories: ServiceCategory[] = [
   {
     icon: Zap,
     title: "Quick AI Builds",
     color: "hsl(210 100% 60%)",
-    services: [
-      { name: "AI Landing Page", whatWeDeliver: "High converting landing page design and development", clientDeliverables: "1 responsive landing page, copy sections, basic SEO setup, deployment", buildTime: "300" },
-      { name: "AI Automation Setup", whatWeDeliver: "Automate a workflow in your business", clientDeliverables: "1 automation workflow, integration setup, documentation", buildTime: "400" },
-      { name: "AI Chatbot Setup", whatWeDeliver: "AI chatbot trained on business information", clientDeliverables: "chatbot setup, training data integration, embed code for website", buildTime: "350" },
-      { name: "AI Internal Tool", whatWeDeliver: "Custom tool for internal workflow", clientDeliverables: "working internal tool, UI interface, database connection", buildTime: "500" },
-      { name: "AI Prototype", whatWeDeliver: "Interactive product prototype", clientDeliverables: "clickable prototype, user flows, screens", buildTime: "300" }
-    ]
+    hasBookCta: true,
+    services: quickAIBuildServices.map((s) => ({
+      name: s.name,
+      whatWeDeliver: s.whatWeDeliver,
+      clientDeliverables: s.clientDeliverables,
+      buildTime: String(s.buildTimeMinutes),
+      slug: s.slug,
+    })),
   },
   {
     icon: Paintbrush,
@@ -93,10 +112,9 @@ const AIPoweredServices = () => {
         </FadeIn>
 
         <div className="space-y-20">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <FadeIn key={category.title} delay={0.1}>
               <div className="flex flex-col gap-8">
-                {/* Category Header */}
                 <div className="flex items-center gap-4">
                   <div 
                     className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-sm" 
@@ -109,42 +127,66 @@ const AIPoweredServices = () => {
                   </h3>
                 </div>
 
-                {/* Table / Grid */}
                 <div className="w-full overflow-hidden rounded-2xl border border-border/60 bg-card shadow-sm">
-                  {/* Table Header (hidden on mobile, visible on lg) */}
-                  <div className="hidden lg:grid grid-cols-[1.5fr_2fr_2fr_140px] gap-6 p-5 bg-muted/40 border-b border-border/60 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                  <div
+                    className={
+                      category.hasBookCta
+                        ? "hidden lg:grid grid-cols-[1.4fr_2fr_2fr_minmax(120px,1fr)_140px] gap-6 p-5 bg-muted/40 border-b border-border/60 text-sm font-semibold text-muted-foreground uppercase tracking-wider"
+                        : "hidden lg:grid grid-cols-[1.5fr_2fr_2fr_140px] gap-6 p-5 bg-muted/40 border-b border-border/60 text-sm font-semibold text-muted-foreground uppercase tracking-wider"
+                    }
+                  >
                     <div>Service</div>
                     <div>What We Deliver</div>
                     <div>Client Deliverables</div>
+                    {category.hasBookCta && <div className="text-center lg:text-center">Get started</div>}
                     <div className="text-right">Build Time</div>
                   </div>
 
-                  {/* Rows */}
                   <div className="divide-y divide-border/60">
                     {category.services.map((service, idx) => (
                       <div 
                         key={idx} 
-                        className="grid grid-cols-1 lg:grid-cols-[1.5fr_2fr_2fr_140px] gap-4 lg:gap-6 p-5 lg:p-6 items-start lg:items-center hover:bg-muted/20 transition-colors"
+                        className={
+                          category.hasBookCta
+                            ? "grid grid-cols-1 lg:grid-cols-[1.4fr_2fr_2fr_minmax(120px,1fr)_140px] gap-4 lg:gap-6 p-5 lg:p-6 items-start lg:items-center hover:bg-muted/20 transition-colors"
+                            : "grid grid-cols-1 lg:grid-cols-[1.5fr_2fr_2fr_140px] gap-4 lg:gap-6 p-5 lg:p-6 items-start lg:items-center hover:bg-muted/20 transition-colors"
+                        }
                       >
-                        {/* Service Name */}
                         <div>
                           <span className="lg:hidden text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Service</span>
-                          <span className="font-semibold text-foreground text-base">{service.name}</span>
+                          {service.slug ? (
+                            <Link
+                              to={`/book/quick-ai/${service.slug}`}
+                              className="font-semibold text-foreground text-base hover:text-primary hover:underline underline-offset-2 inline-block text-left"
+                            >
+                              {service.name}
+                            </Link>
+                          ) : (
+                            <span className="font-semibold text-foreground text-base">{service.name}</span>
+                          )}
                         </div>
                         
-                        {/* What We Deliver */}
                         <div>
                           <span className="lg:hidden text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">What We Deliver</span>
                           <span className="text-sm text-foreground/80 leading-relaxed block">{service.whatWeDeliver}</span>
                         </div>
                         
-                        {/* Client Deliverables */}
                         <div>
                           <span className="lg:hidden text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Client Deliverables</span>
                           <span className="text-sm text-muted-foreground leading-relaxed block">{service.clientDeliverables}</span>
                         </div>
+
+                        {category.hasBookCta && service.slug && (
+                          <div className="pt-2 lg:pt-0 flex lg:justify-center">
+                            <span className="lg:hidden text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block w-full">
+                              Get started
+                            </span>
+                            <Button asChild size="sm" className="rounded-xl font-semibold shrink-0">
+                              <Link to={`/book/quick-ai/${service.slug}`}>Let&apos;s build</Link>
+                            </Button>
+                          </div>
+                        )}
                         
-                        {/* Build Time */}
                         <div className="lg:text-right pt-2 lg:pt-0">
                           <span className="lg:hidden text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1 block">Build Time</span>
                           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium whitespace-nowrap">
@@ -160,10 +202,8 @@ const AIPoweredServices = () => {
           ))}
         </div>
 
-        {/* Custom CTA Section */}
         <FadeIn delay={0.2}>
           <div className="mt-24 p-8 sm:p-12 rounded-3xl bg-foreground text-background text-center max-w-4xl mx-auto shadow-xl relative overflow-hidden">
-            {/* Background design elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
               <div className="absolute -top-[50%] -left-[10%] w-[70%] h-[150%] rounded-full bg-gradient-to-r from-background to-transparent blur-3xl transform -rotate-12" />
               <div className="absolute -bottom-[50%] -right-[10%] w-[70%] h-[150%] rounded-full bg-gradient-to-l from-background to-transparent blur-3xl transform -rotate-12" />

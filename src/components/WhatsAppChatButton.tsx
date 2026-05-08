@@ -1,9 +1,13 @@
+import { useLocation } from "react-router-dom";
 import { MessageCircle } from "lucide-react";
 
 const WHATSAPP_NUMBER = "917331120200";
 const DEFAULT_TEXT = "Hi Krackbot Studio, I would like to know more about your services.";
 
 const WhatsAppChatButton = () => {
+  const { pathname } = useLocation();
+  if (pathname.startsWith("/admin")) return null;
+
   const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAULT_TEXT)}`;
 
   return (

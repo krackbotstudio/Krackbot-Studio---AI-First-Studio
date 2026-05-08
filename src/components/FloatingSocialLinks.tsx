@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 
 const SOCIAL_LINKS = [
@@ -29,6 +30,9 @@ const SOCIAL_LINKS = [
 ];
 
 const FloatingSocialLinks = () => {
+  const { pathname } = useLocation();
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <div className="fixed right-6 bottom-24 z-[60] flex flex-col gap-2">
       {SOCIAL_LINKS.map(({ label, href, Icon }) => (
